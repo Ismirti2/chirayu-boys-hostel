@@ -1,6 +1,8 @@
-import type { Config } from "tailwindcss";
+import type { Config } from "tailwindcss"
+import defaultTheme from "tailwindcss/defaultTheme"
 
-const config: Config = {
+const config = {
+  darkMode: ["class"],
   content: [
     "./src/pages/**/*.{js,ts,jsx,tsx,mdx}",
     "./src/components/**/*.{js,ts,jsx,tsx,mdx}",
@@ -8,34 +10,33 @@ const config: Config = {
   ],
   theme: {
     extend: {
-      colors: {
-        "chirayu-blue": "#002D62",
-        "chirayu-teal": "#00C4B4",
-        "chirayu-dark": "#001a3a",
-        "chirayu-light": "#f8fafb",
-      },
       fontFamily: {
-        sans: ["Inter", "system-ui", "sans-serif"],
+        sans: ["var(--font-inter)", ...defaultTheme.fontFamily.sans],
+      },
+      colors: {
+        chirayu: {
+          blue: "#002D62",
+          teal: "#00C4B4",
+          dark: "#001a2e",
+        },
       },
       animation: {
-        "fade-in": "fadeIn 0.5s ease-in",
-        "slide-up": "slideUp 0.5s ease-out",
-        "bounce-slow": "bounce 2s infinite",
+        "fade-in": "fadeIn 0.5s ease-in-out",
+        "slide-in": "slideIn 0.5s ease-in-out",
       },
       keyframes: {
         fadeIn: {
-          from: { opacity: "0" },
-          to: { opacity: "1" },
+          "0%": { opacity: "0" },
+          "100%": { opacity: "1" },
         },
-        slideUp: {
-          from: { transform: "translateY(20px)", opacity: "0" },
-          to: { transform: "translateY(0)", opacity: "1" },
+        slideIn: {
+          "0%": { transform: "translateX(-100%)" },
+          "100%": { transform: "translateX(0)" },
         },
       },
     },
   },
-  plugins: [],
-  darkMode: "class",
-};
+  plugins: [require("tailwindcss-animate")],
+} satisfies Config
 
-export default config;
+export default config
